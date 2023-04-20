@@ -44,6 +44,7 @@
         <executable key="matlab" nameKey="MATLAB" pathHelpKey="matlab.helpPath"/>
         <resource type="freemarker" name="edit" location="/templates/editMATLABCommandTask.ftl"/>
         <resource type="download" name="icon" location="images/image1.png"/>
+        <exporter class="com.mathworks.ci.task.export.MatlabCommandTaskExporter"/>
         <help link="MATLABcommand.task.help.link" title="MATLABcommand.task.help.title" />
     </taskType>
 
