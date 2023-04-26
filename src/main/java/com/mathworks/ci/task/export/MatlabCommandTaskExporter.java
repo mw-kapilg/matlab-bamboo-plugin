@@ -14,7 +14,9 @@ import com.atlassian.bamboo.specs.api.validators.common.ValidationProblem;
 import com.atlassian.bamboo.task.export.TaskValidationContext;
 import com.atlassian.bamboo.task.TaskContainer;
 import com.atlassian.bamboo.task.TaskDefinition;
+
 import com.atlassian.bamboo.plugins.command.task.CommandConfig;
+
 import com.atlassian.bamboo.task.TaskConfigConstants;
 
 import com.atlassian.bamboo.util.Narrow;
