@@ -18,34 +18,40 @@ import org.jetbrains.annotations.NotNull;
 // @Immutable
 public final class MatlabCommandTaskProperties extends TaskProperties{
     private static final AtlassianModuleProperties ATLASSIAN_PLUGIN =
-            new AtlassianModuleProperties("com.atlassian.bamboo.plugins.scripttask:task.builder.command");
+            new AtlassianModuleProperties("com.mathworks.ci.matlab-bamboo-plugin:runMATLABCommand");
     private static final ValidationContext VALIDATION_CONTEXT = ValidationContext.of("Command task");
 
+    private final String command;
     @NotNull private final String executable;
-    @Nullable private final String argument;
-    @Nullable private final String environmentVariables;
-    @Nullable private final String workingSubdirectory;
+    // @Nullable private final String argument;
+    // @Nullable private final String environmentVariables;
+    // @Nullable private final String workingSubdirectory;
 
     // for importing
     private MatlabCommandTaskProperties() {
+        this.command = null;
         this.executable = null;
-        this.argument = null;
-        this.environmentVariables = null;
-        this.workingSubdirectory = null;
+        // this.argument = null;
+        // this.environmentVariables = null;
+        // this.workingSubdirectory = null;
     }
 
     public MatlabCommandTaskProperties(@Nullable final String description,
                                  final boolean enabled,
-                                 @NotNull final String executable,
-                                 @Nullable final String argument,
-                                 @Nullable final String environmentVariables,
-                                 @Nullable final String workingSubdirectory) throws PropertiesValidationException {
-        super(description, enabled);
+                                 final String command,
+                                 @NotNull final String executable
+                                //  @Nullable final String argument,
+                                //  @Nullable final String environmentVariables,
+                                //  @Nullable final String workingSubdirectory
+                                 ) throws PropertiesValidationException {
+        // uncomment the following line
+        // super(description, enabled);
 
+        this.command = command;
         this.executable = executable;
-        this.argument = argument;
-        this.environmentVariables = environmentVariables;
-        this.workingSubdirectory = workingSubdirectory;
+        // this.argument = argument;
+        // this.environmentVariables = environmentVariables;
+        // this.workingSubdirectory = workingSubdirectory;
 
         validate();
     }
@@ -63,23 +69,27 @@ public final class MatlabCommandTaskProperties extends TaskProperties{
     // Getters
     // ...
 
+    public String getCommand() {
+        return this.command;
+    }
+
     public String getExecutable() {
         return this.executable;
     }
 
-    public String getArgument() {
-        return this.argument;
-    }
+    // public String getArgument() {
+    //     return this.argument;
+    // }
 
-    public String getEnvironmentVariables() {
-        return this.environmentVariables;
-    }
+    // public String getEnvironmentVariables() {
+    //     return this.environmentVariables;
+    // }
 
-    public String getWorkingSubdirectory() {
-        return this.workingSubdirectory;
-    }
+    // public String getWorkingSubdirectory() {
+    //     return this.workingSubdirectory;
+    // }
 
     public AtlassianModuleProperties getAtlassianPlugin() {
-        
+        return this.ATLASSIAN_PLUGIN;
     }
 }
