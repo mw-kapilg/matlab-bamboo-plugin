@@ -10,14 +10,17 @@ import com.atlassian.bamboo.specs.api.model.task.TaskProperties;
 import com.atlassian.bamboo.specs.api.exceptions.PropertiesValidationException;
 import com.atlassian.bamboo.specs.api.model.AtlassianModuleProperties;
 import com.atlassian.bamboo.specs.api.validators.common.ValidationContext;
+import com.atlassian.bamboo.specs.api.model.plan.requirement.RequirementProperties;
 // import org.apache.commons.lang3.StringUtils;
+import java.util.List;
+import java.util.ArrayList;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.NotNull;
 
 // @Immutable
 public class MatlabCommandTaskProperties extends TaskProperties {
     private static final AtlassianModuleProperties ATLASSIAN_PLUGIN =
-            new AtlassianModuleProperties("com.mathworks.ci:matlab-bamboo-plugin");
+            new AtlassianModuleProperties("matlab-bamboo-plugin:runMATLABCommand");
     private static final ValidationContext VALIDATION_CONTEXT = ValidationContext.of("Matlab Command task");
 
     @NotNull private final String matlabExecutable;
@@ -33,7 +36,8 @@ public class MatlabCommandTaskProperties extends TaskProperties {
                                  final boolean enabled,
                                  @NotNull final String matlabExecutable,
                                  @Nullable final String matlabCommand) throws PropertiesValidationException {
-        super(description, enabled);
+        // super(description, enabled, new ArrayList<RequirementProperties>());
+        super();
 
         this.matlabExecutable = matlabExecutable;
         this.matlabCommand = matlabCommand;

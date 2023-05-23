@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.ArrayList;
 import com.mathworks.ci.properties.MatlabCommandTaskProperties;
 import com.mathworks.ci.helper.MatlabBuilderConstants;
-import com.mathworks.ci.task.MatlabCommandTask;
+import com.mathworks.ci.builder.MatlabCommandTaskBuilder;
 
 public class MatlabCommandTaskExporter implements TaskDefinitionExporter {
     @NotNull
@@ -40,12 +40,12 @@ public class MatlabCommandTaskExporter implements TaskDefinitionExporter {
 
     @NotNull
     @Override
-    public MatlabCommandTask toSpecsEntity(@NotNull final TaskDefinition taskDefinition) {
+    public MatlabCommandTaskBuilder toSpecsEntity(@NotNull final TaskDefinition taskDefinition) {
         final Map<String, String> configuration = taskDefinition.getConfiguration();
 
-        final MatlabCommandTask matlabCommandTask = new MatlabCommandTask();
+        // final MatlabCommandTask matlabCommandTask = new MatlabCommandTask();
 
-        return matlabCommandTask
+        return new MatlabCommandTaskBuilder()
                 .matlabExecutable(configuration.get(MatlabBuilderConstants.MATLAB_CFG_KEY))
                 .matlabCommand(configuration.get(MatlabBuilderConstants.MATLAB_COMMAND_CFG_KEY));
     }
