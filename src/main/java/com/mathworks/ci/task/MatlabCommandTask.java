@@ -20,9 +20,13 @@ import com.atlassian.utils.process.ExternalProcess;
 import com.mathworks.ci.helper.MatlabCommandRunner;
 import com.mathworks.ci.helper.MatlabBuilderConstants;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 @Scanned
 public class MatlabCommandTask implements TaskType {
+    @NotNull private String matlabExecutable;
+    @Nullable private String matlabCommand;
+
     @ComponentImport
     private final ProcessService processService;
 
@@ -30,6 +34,11 @@ public class MatlabCommandTask implements TaskType {
     private final CapabilityContext capabilityContext;
 
     private MatlabCommandRunner matlabCommandRunner;
+
+    public MatlabCommandTask() {
+        this.matlabExecutable = null;
+        this.matlabCommand = null;
+    }
 
     public MatlabCommandTask(ProcessService processService, CapabilityContext capabilityContext, MatlabCommandRunner matlabCommandRunner) {
         this.processService = processService;
@@ -58,5 +67,25 @@ public class MatlabCommandTask implements TaskType {
             matlabCommandRunner.cleanup(buildLogger);
         }
         return taskResultBuilder.build();
+    }
+
+    /**
+     * Sets label (<em>not a path</em>) of command to be executed. This label must be first
+     * defined in the GUI on the Administration/Executables page.
+     */
+    public MatlabCommandTask matlabExecutable(@NotNull final String matlabExecutable) {
+        // checkNotEmpty("matlabExecutable", matlabExecutable);
+        this.matlabExecutable = matlabExecutable;
+        // this.matlabExecutable = taskContext.getConfigurationMap().get(MatlabBuilderConstants.MATLAB_CFG_KEY);
+        return this;
+    }
+
+    /**
+     * Sets MATLAB command to be passed when run command is executed.
+     */
+    public MatlabCommandTask matlabCommand(@Nullable final String matlabCommand) {
+        this.matlabCommand = matlabCommand;
+        // this.matlabCommand = taskContext.getConfigurationMap().get(MatlabBuilderConstants.MATLAB_COMMAND_CFG_KEY);
+        return this;
     }
 }
