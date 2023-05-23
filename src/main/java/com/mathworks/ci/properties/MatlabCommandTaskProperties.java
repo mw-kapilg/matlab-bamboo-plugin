@@ -7,6 +7,8 @@
 package com.mathworks.ci.properties;
 
 import com.atlassian.bamboo.specs.api.model.task.TaskProperties;
+import com.atlassian.bamboo.specs.api.codegen.annotations.Builder;
+import com.mathworks.ci.builder.MatlabCommandTaskBuilder;
 import com.atlassian.bamboo.specs.api.exceptions.PropertiesValidationException;
 import com.atlassian.bamboo.specs.api.model.AtlassianModuleProperties;
 import com.atlassian.bamboo.specs.api.validators.common.ValidationContext;
@@ -18,6 +20,7 @@ import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.NotNull;
 
 // @Immutable
+@Builder(MatlabCommandTaskBuilder.class)
 public class MatlabCommandTaskProperties extends TaskProperties {
     private static final AtlassianModuleProperties ATLASSIAN_PLUGIN =
             new AtlassianModuleProperties("matlab-bamboo-plugin:runMATLABCommand");
@@ -62,5 +65,15 @@ public class MatlabCommandTaskProperties extends TaskProperties {
 
     public AtlassianModuleProperties getAtlassianPlugin() {
         return this.ATLASSIAN_PLUGIN;
+    }
+
+    @Override
+    public boolean equals(Object o){
+        return (this == o);
+    }
+
+    @Override
+    public int hashCode(){
+        return this.hashCode();
     }
 }
