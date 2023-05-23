@@ -20,7 +20,7 @@
 
     <properties>
         <bamboo.version>6.8.0</bamboo.version>
-        <bamboo.data.version>6.8.0</bamboo.data.version>
+        <bamboo.data.version>${bamboo.version}</bamboo.data.version>
         <amps.version>8.0.2</amps.version>
         <plugin.testrunner.version>2.0.1</plugin.testrunner.version>
         <atlassian.spring.scanner.version>1.2.13</atlassian.spring.scanner.version>
@@ -38,6 +38,32 @@
             <version>${bamboo.version}</version>
             <scope>provided</scope>
         </dependency>
+
+        <!-- <dependency>
+            <groupId>com.atlassian.bamboo</groupId>
+            <artifactId>atlassian-bamboo-api</artifactId>
+            <version>${bamboo.version}</version>
+            <scope>provided</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.tek42.perforce</groupId>
+                    <artifactId>p4java</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>com.atlassian.bamboo</groupId>
+            <artifactId>atlassian-bamboo-core</artifactId>
+            <version>${bamboo.version}</version>
+            <scope>provided</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.tek42.perforce</groupId>
+                    <artifactId>p4java</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency> -->
 
         <dependency>
             <groupId>com.atlassian.plugin</groupId>
