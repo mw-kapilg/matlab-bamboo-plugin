@@ -13,21 +13,28 @@ import com.atlassian.bamboo.specs.api.exceptions.PropertiesValidationException;
 import com.atlassian.bamboo.specs.api.model.AtlassianModuleProperties;
 import com.atlassian.bamboo.specs.api.validators.common.ValidationContext;
 import com.atlassian.bamboo.specs.api.model.plan.requirement.RequirementProperties;
-// import org.apache.commons.lang3.StringUtils;
+import com.atlassian.bamboo.specs.api.model.plan.condition.ConditionProperties;
+import org.apache.commons.lang3.StringUtils;
+import javax.annotation.concurrent.Immutable;
+import java.util.Objects;
 import java.util.List;
 import java.util.ArrayList;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.NotNull;
 
-// @Immutable
+// import static checkThat;
+
+@Immutable
 @Builder(MatlabCommandTaskBuilder.class)
 public class MatlabCommandTaskProperties extends TaskProperties {
     private static final AtlassianModuleProperties ATLASSIAN_PLUGIN =
-            new AtlassianModuleProperties("matlab-bamboo-plugin:runMATLABCommand");
-    private static final ValidationContext VALIDATION_CONTEXT = ValidationContext.of("Matlab Command task");
+            new AtlassianModuleProperties("com.mathworks.ci.matlab-bamboo-plugin:runMATLABCommand");
+    private static final ValidationContext VALIDATION_CONTEXT = ValidationContext.of("MatlabCommand task");
 
-    @NotNull private final String matlabExecutable;
-    @Nullable private final String matlabCommand;
+    // @NotNull private final String matlabExecutable;
+    // @Nullable private final String matlabCommand;
+    private final String matlabExecutable;
+    private final String matlabCommand;
 
     // for importing
     private MatlabCommandTaskProperties() {
@@ -35,12 +42,14 @@ public class MatlabCommandTaskProperties extends TaskProperties {
         this.matlabCommand = null;
     }
 
-    public MatlabCommandTaskProperties(@Nullable final String description,
-                                 final boolean enabled,
-                                 @NotNull final String matlabExecutable,
-                                 @Nullable final String matlabCommand) throws PropertiesValidationException {
-        // super(description, enabled, new ArrayList<RequirementProperties>());
-        super();
+    public MatlabCommandTaskProperties(@Nullable String description,
+                                 boolean enabled,
+                                 @NotNull String matlabExecutable,
+                                 @NotNull String matlabCommand,
+                                 @NotNull List<RequirementProperties> requirements,
+                                 @NotNull List<? extends ConditionProperties> conditions) throws PropertiesValidationException {
+        super(description, enabled, requirements, conditions);
+        // super();
 
         this.matlabExecutable = matlabExecutable;
         this.matlabCommand = matlabCommand;
@@ -49,22 +58,10 @@ public class MatlabCommandTaskProperties extends TaskProperties {
     }
 
     @Override
-    public void validate() throws PropertiesValidationException {
+    public void validate() {
         super.validate();
 
         // checkThat(VALIDATION_CONTEXT, StringUtils.isNotBlank(matlabExecutable), "Executable is not defined");
-    }
-
-    public String getMatlabExecutable() {
-        return this.matlabExecutable;
-    }
-
-    public String getMatlabCommand() {
-        return this.matlabCommand;
-    }
-
-    public AtlassianModuleProperties getAtlassianPlugin() {
-        return this.ATLASSIAN_PLUGIN;
     }
 
     @Override
@@ -74,6 +71,20 @@ public class MatlabCommandTaskProperties extends TaskProperties {
 
     @Override
     public int hashCode(){
-        return this.hashCode();
+        return Objects.hash(super.hashCode(), getMatlabExecutable(), getMatlabCommand());
+    }
+
+    @NotNull
+    @Override
+    public AtlassianModuleProperties getAtlassianPlugin() {
+        return ATLASSIAN_PLUGIN;
+    }
+
+    public String getMatlabExecutable() {
+        return matlabExecutable;
+    }
+
+    public String getMatlabCommand() {
+        return matlabCommand;
     }
 }

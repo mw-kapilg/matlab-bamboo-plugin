@@ -1,14 +1,17 @@
 package com.mathworks.ci.builder;
 
 import com.atlassian.bamboo.specs.api.builders.task.Task;
-import com.mathworks.ci.task.MatlabCommandTask;
+// import com.mathworks.ci.task.MatlabCommandTask;
 import com.mathworks.ci.properties.MatlabCommandTaskProperties;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.NotNull;
+import java.util.Objects;
 
-public class MatlabCommandTaskBuilder extends Task <MatlabCommandTaskBuilder, MatlabCommandTaskProperties> {
-    @NotNull private String matlabExecutable;
-    @Nullable private String matlabCommand;
+// import static checkNotBlank;
+
+public class MatlabCommandTaskBuilder extends Task<MatlabCommandTaskBuilder, MatlabCommandTaskProperties> {
+    private String matlabExecutable;
+    private String matlabCommand;
 
     /**
      * Sets label (<em>not a path</em>) of command to be executed. This label must be first
@@ -23,7 +26,7 @@ public class MatlabCommandTaskBuilder extends Task <MatlabCommandTaskBuilder, Ma
     /**
      * Sets MATLAB command to be passed when run command is executed.
      */
-    public MatlabCommandTaskBuilder matlabCommand(@Nullable final String matlabCommand) {
+    public MatlabCommandTaskBuilder matlabCommand(@NotNull final String matlabCommand) {
         this.matlabCommand = matlabCommand;
         return this;
     }
@@ -35,6 +38,18 @@ public class MatlabCommandTaskBuilder extends Task <MatlabCommandTaskBuilder, Ma
                 description,
                 taskEnabled,
                 matlabExecutable,
-                matlabCommand);
+                matlabCommand,
+                requirements,
+                conditions);
+    }
+
+    @Override
+    public boolean equals(Object o){
+        return (this == o);
+    }
+
+    @Override
+    public int hashCode(){
+        return Objects.hash(super.hashCode(), matlabExecutable, matlabCommand);
     }
 }
