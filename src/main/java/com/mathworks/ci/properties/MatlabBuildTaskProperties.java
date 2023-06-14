@@ -1,14 +1,14 @@
 /**
  * Copyright 2020-2022 The MathWorks, Inc.
  * 
- * Run MATLAB Command Task Invocation
+ * Run MATLAB Build Task Invocation
  */
 
 package com.mathworks.ci.properties;
 
 import com.atlassian.bamboo.specs.api.model.task.TaskProperties;
 import com.atlassian.bamboo.specs.api.codegen.annotations.Builder;
-import com.mathworks.ci.builder.MatlabCommandTaskBuilder;
+import com.mathworks.ci.builder.MatlabBuildTaskBuilder;
 import com.atlassian.bamboo.specs.api.exceptions.PropertiesValidationException;
 import com.atlassian.bamboo.specs.api.model.AtlassianModuleProperties;
 import com.atlassian.bamboo.specs.api.validators.common.ValidationContext;
@@ -25,32 +25,33 @@ import org.jetbrains.annotations.NotNull;
 // import static checkThat;
 
 @Immutable
-@Builder(MatlabCommandTaskBuilder.class)
-public class MatlabCommandTaskProperties extends TaskProperties {
+@Builder(MatlabBuildTaskBuilder.class)
+public class MatlabBuildTaskProperties extends TaskProperties {
     private static final AtlassianModuleProperties ATLASSIAN_PLUGIN =
-            new AtlassianModuleProperties("com.mathworks.ci.matlab-bamboo-plugin:runMATLABCommand");
-    private static final ValidationContext VALIDATION_CONTEXT = ValidationContext.of("MatlabCommand task");
+            new AtlassianModuleProperties("com.mathworks.ci.matlab-bamboo-plugin:runMATLABBuild");
+    private static final ValidationContext VALIDATION_CONTEXT = ValidationContext.of("MatlabBuild task");
 
+    // @NotNull private final String matlabExecutable;
     private final String matlabExecutable;
-    private final String matlabCommand;
+    private final String buildTasks;
 
     // for importing
-    private MatlabCommandTaskProperties() {
+    private MatlabBuildTaskProperties() {
         this.matlabExecutable = null;
-        this.matlabCommand = null;
+        this.buildTasks = null;
     }
 
-    public MatlabCommandTaskProperties(@Nullable String description,
+    public MatlabBuildTaskProperties(@Nullable String description,
                                  boolean enabled,
                                  @NotNull String matlabExecutable,
-                                 @NotNull String matlabCommand,
+                                 @NotNull String buildTasks,
                                  @NotNull List<RequirementProperties> requirements,
                                  @NotNull List<? extends ConditionProperties> conditions) throws PropertiesValidationException {
         super(description, enabled, requirements, conditions);
         // super();
 
         this.matlabExecutable = matlabExecutable;
-        this.matlabCommand = matlabCommand;
+        this.buildTasks = buildTasks;
 
         validate();
     }
@@ -69,7 +70,7 @@ public class MatlabCommandTaskProperties extends TaskProperties {
 
     @Override
     public int hashCode(){
-        return Objects.hash(super.hashCode(), getMatlabExecutable(), getMatlabCommand());
+        return Objects.hash(super.hashCode(), getMatlabExecutable(), getBuildTasks());
     }
 
     @NotNull
@@ -82,7 +83,7 @@ public class MatlabCommandTaskProperties extends TaskProperties {
         return matlabExecutable;
     }
 
-    public String getMatlabCommand() {
-        return matlabCommand;
+    public String getBuildTasks() {
+        return buildTasks;
     }
 }
